@@ -125,8 +125,3 @@ Runs
 '''
 bot.run(secrets.get_token())
 bot.run(token) # run의 인자로 token 입력
-
-# 레퍼런스 모음
-# https://omoknooni.tistory.com/18?category=873653
-# https://omoknooni.tistory.com/19?category=873653
-# https://neony.tistory.com/3

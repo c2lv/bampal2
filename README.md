@@ -40,3 +40,18 @@ $ python3 -m pip install -U discord.py
 ```terminal
 $ python3 discord_bot.py
 ```
+
+## Reference
+[DiscordBot] 파이썬으로 디스코드 봇 만들기 -1~2  
+- https://omoknooni.tistory.com/18?category=873653  
+- https://omoknooni.tistory.com/19?category=873653  
+
+디스코드 채널 아이디 알아내기
+- https://neony.tistory.com/3  
+
+사이트 정보 추출하기 - beautifulsoup 사용법 (1~2)
+- https://wikidocs.net/85739
+- https://wikidocs.net/86334
+
+디스코드 봇 강좌 - 1~5편, 번외편
+- https://ioxoi.tistory.com/category/%5B%EA%B0%9C%EB%B0%9C%EC%9E%90%5DDFR-%ED%8C%8C%EC%9D%B4%EC%8D%AC/%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C%20%EB%B4%87
