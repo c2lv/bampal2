@@ -2,7 +2,7 @@
   
 :elephant: [채널 입장하기](https://discord.gg/6BVxgEvCM7)
 
-평일 오후 6시마다 당일 올라온
+매일 오후 6시마다 당일 올라온
 동국대학교 홈페이지의 일반/학사/장학 공지를 알려주는
 [dgu-notice-bot](https://github.com/JuYeong0413/dgu-notice-bot)이 2022년 3월 2일 동국대학교 홈페이지 개편과 관리자 개인 사정으로 인해 알림 서비스를 종료하게 되어, 개편된 홈페이지에 맞게 코드를 수정하고 새롭게 만든 디스코드 공지봇.  
 
@@ -55,3 +55,9 @@ $ python3 discord_bot.py
 
 디스코드 봇 강좌 - 1~5편, 번외편
 - https://ioxoi.tistory.com/category/%5B%EA%B0%9C%EB%B0%9C%EC%9E%90%5DDFR-%ED%8C%8C%EC%9D%B4%EC%8D%AC/%EB%94%94%EC%8A%A4%EC%BD%94%EB%93%9C%20%EB%B4%87
+
+Send a message to a Discord channel at a certain time once a week
+- https://www.reddit.com/r/Discord_Bots/comments/pc0k1k/send_a_message_to_a_discord_channel_at_a_certain/
+
+Cog
+- https://velog.io/@chaejm55/13.-Cog-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B01

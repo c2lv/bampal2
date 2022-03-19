@@ -1,4 +1,4 @@
-import discord, os, random, crawling, asyncio, aiocron
+import discord, os, random, crawling, aiocron
 from discord.ext import commands
 import load_secrets as secrets
 
@@ -32,29 +32,30 @@ bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity
 '''
 Loop
 '''
-@aiocron.crontab('* 18 * * * 0') # minute hour day month week second
-async def post_notice():
-    ch_general = bot.get_channel(ch_general_id)
-    ch_academic = bot.get_channel(ch_academic_id)
-    ch_scholarship = bot.get_channel(ch_scholarship_id)
+class PostNotice(commands.Cog):
+    @aiocron.crontab('0 18 * * * 0') # minute hour day month week second
+    async def postNotice():
+        # Get channel
+        ch_general = bot.get_channel(ch_general_id)
+        ch_academic = bot.get_channel(ch_academic_id)
+        ch_scholarship = bot.get_channel(ch_scholarship_id)
 
-    # Get notice
-    general_message = crawling.run(general_url, type_general)
-    academic_message = crawling.run(academic_url, type_academic)
-    scholarship_message = crawling.run(scholarship_url, type_scholarship)
+        # Get notice
+        general_message = crawling.run(general_url, type_general)
+        academic_message = crawling.run(academic_url, type_academic)
+        scholarship_message = crawling.run(scholarship_url, type_scholarship)
 
-    # Send message to channel
-    await ch_general.send(general_message)
-    await ch_academic.send(academic_message)
-    await ch_scholarship.send(scholarship_message)
-asyncio.get_event_loop().run_forever()
+        # Send message to channel
+        await ch_general.send(general_message)
+        await ch_academic.send(academic_message)
+        await ch_scholarship.send(scholarship_message)
+
+bot.add_cog(PostNotice(bot))
 
 '''
 Events
 '''
-@bot.event
-async def on_ready():
-    post_notice.start()
+# @bot.event
 
 '''
 Commands
