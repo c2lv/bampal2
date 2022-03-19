@@ -1,6 +1,7 @@
 # 밤팔이
-  
-:elephant: [채널 입장하기](https://discord.gg/6BVxgEvCM7)
+
+:elephant: [채널 입장하기](https://discord.gg/6BVxgEvCM7)  
+![bampal2_app_icon](./bampal2.png)
 
 매일 오후 6시마다 당일 올라온
 동국대학교 홈페이지의 일반/학사/장학 공지를 알려주는
