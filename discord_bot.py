@@ -1,5 +1,5 @@
-import discord, os, random, crawling
-from discord.ext import commands, tasks
+import discord, os, random, crawling, asyncio, aiocron
+from discord.ext import commands
 import load_secrets as secrets
 
 # stream = discord.Streaming(name="", url=""))
@@ -30,9 +30,9 @@ ch_scholarship_id = 953741442717732944
 bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity=game)
 
 '''
-Tasks
+Loop
 '''
-@tasks.loop(hours=24)
+@aiocron.crontab('* 18 * * * 0') # minute hour day month week second
 async def post_notice():
     ch_general = bot.get_channel(ch_general_id)
     ch_academic = bot.get_channel(ch_academic_id)
@@ -47,6 +47,7 @@ async def post_notice():
     await ch_general.send(general_message)
     await ch_academic.send(academic_message)
     await ch_scholarship.send(scholarship_message)
+asyncio.get_event_loop().run_forever()
 
 '''
 Events
