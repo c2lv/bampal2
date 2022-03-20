@@ -33,7 +33,7 @@ bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity
 Loop
 '''
 class PostNotice(commands.Cog):
-    @aiocron.crontab('0 18 * * *') # minute hour day month week second
+    @aiocron.crontab('0 9 * * *') # minute hour day month week second, UTC
     async def postNotice():
         # Get channel
         ch_general = bot.get_channel(ch_general_id)
