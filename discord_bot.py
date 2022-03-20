@@ -33,7 +33,7 @@ bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity
 Loop
 '''
 class PostNotice(commands.Cog):
-    @aiocron.crontab('0 18 * * * 0') # minute hour day month week second
+    @aiocron.crontab('0 18 * * *') # minute hour day month week second
     async def postNotice():
         # Get channel
         ch_general = bot.get_channel(ch_general_id)
@@ -50,7 +50,21 @@ class PostNotice(commands.Cog):
         await ch_academic.send(academic_message)
         await ch_scholarship.send(scholarship_message)
 
+class TestPost(commands.Cog):
+    @aiocron.crontab('0 * * * *') # minute hour day month week second
+    async def postNotice():
+        # Get channel
+        ch_general = bot.get_channel(954219950183170138)
+        ch_academic = bot.get_channel(954219997121638420)
+        ch_scholarship = bot.get_channel(954220024774688818)
+
+        # Send message to channel
+        await ch_general.send("1시간 경과")
+        await ch_academic.send("1시간 경과")
+        await ch_scholarship.send("1시간 경과")
+
 bot.add_cog(PostNotice(bot))
+bot.add_cog(TestPost(bot))
 
 '''
 Events
