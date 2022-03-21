@@ -1,6 +1,7 @@
 import discord, os, random, crawling, aiocron
 from discord.ext import commands
 import load_secrets as secrets
+from datetime import datetime
 
 # stream = discord.Streaming(name="", url=""))
 # listen = discord.Activity(type=discord.ActivityType.listening, name="")
@@ -30,7 +31,7 @@ ch_scholarship_id = 953741442717732944
 bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity=game)
 
 '''
-Loop
+Loops
 '''
 class PostNotice(commands.Cog):
     @aiocron.crontab('0 9 * * *') # minute hour day month week second, UTC
@@ -50,21 +51,7 @@ class PostNotice(commands.Cog):
         await ch_academic.send(academic_message)
         await ch_scholarship.send(scholarship_message)
 
-class TestPost(commands.Cog):
-    @aiocron.crontab('0 * * * *') # minute hour day month week second
-    async def postNotice():
-        # Get channel
-        ch_general = bot.get_channel(954219950183170138)
-        ch_academic = bot.get_channel(954219997121638420)
-        ch_scholarship = bot.get_channel(954220024774688818)
-
-        # Send message to channel
-        await ch_general.send("1시간 경과")
-        await ch_academic.send("1시간 경과")
-        await ch_scholarship.send("1시간 경과")
-
 bot.add_cog(PostNotice(bot))
-bot.add_cog(TestPost(bot))
 
 '''
 Events
@@ -124,6 +111,9 @@ async def rps(ctx, hand:str):
                 await ctx.send(f"{bot_choice}!\n비겼습니다.")
             if (hand in rock and bot_choice == hands[2]) or (hand in scissors and bot_choice == hands[0]) or (hand in paper and bot_choice == hands[1]):
                 await ctx.send(f"{bot_choice}!\n밤팔이가 이겼습니다!")
+@rps.error
+async def rps_error(ctx, error):
+    await ctx.send("올바른 가위바위보 명령어가 아닙니다.")
 
 @bot.command(aliases=['도움', '도움말', '밤팔이'])
 async def h(ctx):
@@ -135,6 +125,12 @@ async def h(ctx):
     embed.add_field(name="5. 가위바위보", value="!rps [가위/바위/보]", inline=False)
     embed.add_field(name="6. 개발자", value="!developer", inline=False)
     await ctx.send(embed=embed)
+
+@bot.command()
+async def st(ctx):
+    now = datetime.now()
+    await ctx.send(now)
+    await ctx.send(f"현재 서버 시간은 {now.year}년 {now.month}월 {now.day}일 {now.hour}시 {now.minute}분 {now.second}초입니다.")
 
 '''
 Runs
