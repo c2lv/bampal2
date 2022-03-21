@@ -1,4 +1,4 @@
-import discord, os, random, crawling, aiocron
+import discord, os, random, crawling, aiocron, const
 from discord.ext import commands
 import load_secrets as secrets
 from datetime import datetime
@@ -7,28 +7,12 @@ from datetime import datetime
 # listen = discord.Activity(type=discord.ActivityType.listening, name="")
 # watch = discord.Activity(type=discord.ActivityType.watching, name=""))
 game = discord.Game("열심히 공지사항 정리")
-prefix = "!"
 win_straight = 0 # 연승 횟수
 
 # Get discord token
 token = os.environ.get('discord_token')
 
-# notice types
-type_general = "일반"
-type_academic = "학사"
-type_scholarship = "장학"
-
-# notice links
-general_url = "https://www.dongguk.edu/article/GENERALNOTICES/list"
-academic_url = "https://www.dongguk.edu/article/HAKSANOTICE/list"
-scholarship_url = "https://www.dongguk.edu/article/JANGHAKNOTICE/list"
-
-# discord channel id
-ch_general_id = 953744824954138675
-ch_academic_id = 953741410434175016
-ch_scholarship_id = 953741442717732944
-
-bot = commands.Bot(command_prefix=prefix, status=discord.Status.online, activity=game)
+bot = commands.Bot(command_prefix=const.PREFIX, status=discord.Status.online, activity=game)
 
 '''
 Loops
@@ -37,19 +21,25 @@ class PostNotice(commands.Cog):
     @aiocron.crontab('0 9 * * *') # minute hour day month week second, UTC
     async def postNotice():
         # Get channel
-        ch_general = bot.get_channel(ch_general_id)
-        ch_academic = bot.get_channel(ch_academic_id)
-        ch_scholarship = bot.get_channel(ch_scholarship_id)
+        ch_general = bot.get_channel(const.CH_GENERAL_ID)
+        ch_academic = bot.get_channel(const.CH_ACADEMIC_ID)
+        ch_scholarship = bot.get_channel(const.CH_SCHOLARSHIP_ID)
+        ch_workScholarship = bot.get_channel(const.CH_WORKSCHOLARSHIP_ID)
+        ch_collegeOfEducation = bot.get_channel(const.CH_COLLEGEOFEDUCATION_ID)
 
         # Get notice
-        general_message = crawling.run(general_url, type_general)
-        academic_message = crawling.run(academic_url, type_academic)
-        scholarship_message = crawling.run(scholarship_url, type_scholarship)
+        general_message = crawling.run(const.GENERAL_URL, const.TYPE_GENERAL)
+        academic_message = crawling.run(const.ACADEMIC_URL, const.TYPE_ACADEMIC)
+        scholarship_message = crawling.run(const.SCHOLARSHIP_URL, const.TYPE_SCHOLARSHIP)
+        workScholarship_message = crawling.run(const.WORKSCHOLARSHIP_URL, const.TYPE_WORKSCHOLARSHIP)
+        collegeOfEducation_message = crawling.run(const.COLLEGEOFEDUCATION_URL, const.TYPE_COLLEGEOFEDUCATION)
 
         # Send message to channel
         await ch_general.send(general_message)
         await ch_academic.send(academic_message)
         await ch_scholarship.send(scholarship_message)
+        await ch_workScholarship.send(workScholarship_message)
+        await ch_collegeOfEducation.send(collegeOfEducation_message)
 
 bot.add_cog(PostNotice(bot))
 
