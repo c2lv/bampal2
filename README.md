@@ -1,5 +1,4 @@
 # 밤팔이
-
 :elephant: [채널 입장하기](https://discord.gg/6BVxgEvCM7)  
 ![bampal2_app_icon](./bampal2.png)
 
@@ -10,8 +9,8 @@
 기존과 동일하게 채널 메시지를 통해 공지를 알려주며, 사용자 채널과 명령어가 추가되었다.
 
 ## Environment
+OS: Window 10
 * Python 3.9.1
-* beautifulsoup4
 * requests
 * [discord.py](https://github.com/Rapptz/discord.py)  
 
@@ -20,26 +19,27 @@
 ## Running the server locally
 1. Clone this repository.
 ```terminal
-$ git clone https://github.com/c2lv/bampal2.git
+git clone https://github.com/c2lv/bampal2.git
 ```
-2. Add Discord bot token in `secrets.json`.
-```json
-{
-    "token": "Enter Your Discord Bot Token"
-}
-```
-3. Install the requirements.
+2. Change directory and activate virtualenv.
 ```terminal
-$ pip3 install -r requirements.txt
+cd bampal2
+pip3 install virtualenv
+virtualenv "Enter Your Virtual Environment name"
+source "Enter Your Virtual Environment name"/Scripts/activate
 ```
-4. Install `discord.py`
+3. Add Discord bot token in `BOT_TOKEN` (Config Var).
 ```terminal
-$ python3 -m pip install -U discord.py
+export BOT_TOKEN="Enter Your Discord Bot Token"
 ```
-5. Set channel ID in `discord_bot.py`
+4. Install the requirements.
+```terminal
+pip3 install -r requirements.txt
+```
+5. Set channel ID in `const.py`
 6. Run `discord_bot.py` file.
 ```terminal
-$ python3 discord_bot.py
+python3 discord_bot.py
 ```
 
 ## Reference
@@ -60,5 +60,24 @@ $ python3 discord_bot.py
 Send a message to a Discord channel at a certain time once a week
 - https://www.reddit.com/r/Discord_Bots/comments/pc0k1k/send_a_message_to_a_discord_channel_at_a_certain/
 
+명령어 에러처리
+- https://velog.io/@chaejm55/5.-%EB%AA%85%EB%A0%B9%EC%96%B4-%EC%97%90%EB%9F%AC%EC%B2%98%EB%A6%AC
+
 Cog
 - https://velog.io/@chaejm55/13.-Cog-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B01
+
+헤로쿠 환경변수 설정하고 파이썬에서 사용하기
+- https://programming4myself.tistory.com/6
+
+헤로쿠 무료시간 1000시간으로 늘리기
+- https://programming4myself.tistory.com/7
+- https://nhj12311.tistory.com/283
+
+Heroku 로그보기
+- https://dev-kiha.github.io/heroku/2021/09/23/02.html
+
+Heroku에 로그인 된 상태에서 Terminal에 다음과 같이 입력  
+> heroku logs -a [앱이름]
+
+최근 150줄을 출력하고 싶을 때는 다음과 같이 입력 (-n 옵션이 없을 경우 최근 100줄을 출력)
+> heroku logs -n 150
