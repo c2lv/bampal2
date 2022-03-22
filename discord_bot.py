@@ -1,6 +1,5 @@
 import discord, os, random, crawling, aiocron, const
 from discord.ext import commands
-import load_secrets as secrets
 from datetime import datetime
 
 # stream = discord.Streaming(name="", url=""))
@@ -10,7 +9,7 @@ game = discord.Game("열심히 공지사항 정리")
 win_straight = 0 # 연승 횟수
 
 # Get discord token
-token = os.environ.get('discord_token')
+token = os.environ.get('BOT_TOKEN')
 
 bot = commands.Bot(command_prefix=const.PREFIX, status=discord.Status.online, activity=game)
 
@@ -46,7 +45,13 @@ bot.add_cog(PostNotice(bot))
 '''
 Events
 '''
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("띠용? 무슨 말씀이신지 잘 모르겠어요. 제가 모르는 명령어를 쓰신 것은 아닌가요?\n`!밤팔이`를 입력하시면 사용 가능한 명령어와 사용 방법을 확인하실 수 있습니다.")
 # @bot.event
+# async def on_ready():
+#     pass
 
 '''
 Commands
@@ -64,18 +69,27 @@ async def roll(ctx, number = 6):
     await ctx.send(f'떼구르르... 주사위를 굴려 {random.randint(1, int(number))}이(가) 나왔습니다. (1~{number})')
 @roll.error
 async def roll_error(ctx, error):
-    await ctx.send('올바른 명령어가 아닙니다.\n(N면체 주사위를 굴리고 싶을 때: !roll N)')
+    if isinstance(error, commands.BadArgument):
+        await ctx.send("정수를 입력해주세요!")
 
 @bot.command(aliases=['사다리', '사다리타기', '사다리게임'])
 async def ladder(ctx, number:int, *member:str):
     txt = ""
-    result = random.sample(member, number)
-    for i in result:
-        txt = txt + i + " "
-    await ctx.send(txt + "당첨!")
+    if number == 0:
+        await ctx.send("0명을 뽑으면 아무도 당첨되지 않아요...")
+    else:
+        result = random.sample(member, number)
+        for i in result:
+            txt = txt + i + " "
+        await ctx.send(txt + "당첨!")
 @ladder.error
 async def ladder_error(ctx, error):
-    await ctx.send('올바른 명령어가 아닙니다.\n(3명 중 N명을 뽑는 사다리게임을 하고 싶을 때: !ladder N 사람1 사람2 사람3)')
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("명령어만 쓴 것은 아닌지 확인해주세요!")
+    elif isinstance(error, commands.BadArgument):
+        await ctx.send("당첨자 수는 정수를 입력해주세요!")
+    else:
+        await ctx.send("당첨자 수보다 사람이 적은 것은 아닌지 확인해주세요!")
 
 @bot.command(aliases=['개발자'])
 async def developer(ctx):
@@ -103,27 +117,28 @@ async def rps(ctx, hand:str):
                 await ctx.send(f"{bot_choice}!\n밤팔이가 이겼습니다!")
 @rps.error
 async def rps_error(ctx, error):
-    await ctx.send("올바른 가위바위보 명령어가 아닙니다.")
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("낼 것을 입력해주세요!")
 
 @bot.command(aliases=['도움', '도움말', '밤팔이'])
 async def h(ctx):
-    embed = discord.Embed(title="밤팔이", description="평일 오후 6시마다 그날 올라온 동국대학교의 일반/학사/장학공지를 알려주는 재주 많은 동국대공지맨!", color=0xf76300)
+    embed = discord.Embed(title=":chestnut: 밤팔이", description="오후 6시마다 그날 올라온 동국대 공지를 알려주는 재주 많은 동국대공지맨!\n사용가능한 명령어와 사용 방법은 !help, !help [명령어]로도 확인할 수 있습니다.", color=0xf76300)
     embed.add_field(name="1. 인사", value="!hello", inline=False)
     embed.add_field(name="2. 앵무새", value="!repeat [따라할 말]", inline=False)
     embed.add_field(name="3. 주사위", value="!roll [범위 숫자]", inline=False)
     embed.add_field(name="4. 사다리게임", value="!ladder [당첨자 수] [사람 1] [사람 2] [사람 3] [...]", inline=False)
     embed.add_field(name="5. 가위바위보", value="!rps [가위/바위/보]", inline=False)
     embed.add_field(name="6. 개발자", value="!developer", inline=False)
+    embed.add_field(name="7. 서버시간확인", value="!st", inline=False)
     await ctx.send(embed=embed)
 
-@bot.command()
+@bot.command(aliases=['서버시간확인'])
 async def st(ctx):
     now = datetime.now()
     await ctx.send(now)
     await ctx.send(f"현재 서버 시간은 {now.year}년 {now.month}월 {now.day}일 {now.hour}시 {now.minute}분 {now.second}초입니다.")
 
 '''
-Runs
+Run
 '''
-bot.run(secrets.get_token())
-bot.run(token) # run의 인자로 token 입력
+bot.run(token)
