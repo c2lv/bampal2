@@ -6,7 +6,7 @@
 동국대학교 홈페이지의 일반/학사/장학 공지를 알려주는
 [dgu-notice-bot](https://github.com/JuYeong0413/dgu-notice-bot)이 2022년 3월 2일 동국대학교 홈페이지 개편과 관리자 개인 사정으로 인해 알림 서비스를 종료하게 되어, 개편된 홈페이지에 맞게 코드를 수정하고 새롭게 만든 디스코드 공지봇.  
 
-기존과 동일하게 채널 메시지를 통해 공지를 알려주며, 사용자 채널과 명령어가 추가되었다.
+기존과 동일하게 채널 메시지를 통해 공지를 알려주며, 사용자 채널과 명령어 등이 추가되었다.
 
 ## Environment
 OS: Window 10
@@ -25,8 +25,8 @@ git clone https://github.com/c2lv/bampal2.git
 ```terminal
 cd bampal2
 pip3 install virtualenv
-virtualenv "Enter Your Virtual Environment name"
-source "Enter Your Virtual Environment name"/Scripts/activate
+virtualenv "Enter Your Virtual Environment Name"
+source "Enter Your Virtual Environment Name"/Scripts/activate
 ```
 3. Add Discord bot token in `BOT_TOKEN` (Config Var).
 ```terminal
