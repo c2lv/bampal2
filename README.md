@@ -81,3 +81,14 @@ Heroku에 로그인 된 상태에서 Terminal에 다음과 같이 입력
 
 최근 150줄을 출력하고 싶을 때는 다음과 같이 입력 (-n 옵션이 없을 경우 최근 100줄을 출력)
 > heroku logs -n 150
+
+## Problem
+
+- API가 반환한 값을 어떻게 확인할 수 있는지, 어떻게 해결해야 하는 지 잘 모르겠다.  
+해당 에러가 발생하면 봇이 에러 메시지를 출력하도록 on_command_error() 내부에 조건문을 하나 추가했다.
+
+```terminal
+discord.errors.HTTPException: 429 Too Many Requests (error code: 0): 
+You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently. 
+Please read our docs at https://discord.com/developers/docs/topics/rate-limits to prevent this moving forward.
+```

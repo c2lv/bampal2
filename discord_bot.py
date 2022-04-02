@@ -49,6 +49,8 @@ Events
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("띠용? 무슨 말씀이신지 잘 모르겠어요. 제가 모르는 명령어를 쓰신 것은 아닌가요?\n`!밤팔이`를 입력하시면 사용 가능한 명령어와 사용 방법을 확인하실 수 있습니다.")
+    if isinstance(error, discord.HTTPException):
+        await ctx.send(error)
 # @bot.event
 # async def on_ready():
 #     pass
