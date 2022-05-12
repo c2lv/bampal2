@@ -50,14 +50,16 @@ def get_list_1(url):
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        today = re.sub(r'[^0-9]', '', today) # 숫자 이외의 문자 제거
         detail_url = url[:-4] + "detail/"
         for i in range(1, 17):
             _title = soup.select_one('#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child(' + str(i) + ') > a > div.top > p')
             _link = soup.select_one('#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child(' + str(i) + ') > a').get('onclick')
             _link = re.findall('\(([^)]+)', _link) # goDetail 함수 괄호 안 인자 추출
-            date = soup.select_one('#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child(' + str(i) + ') > a > div.top > div.info > span:nth-child(1)')
+            date = soup.select_one('#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child(' + str(i) + ') > a > div.top > div.info > span:nth-child(1)').text.strip()
+            date = re.sub(r'[^0-9]', '', date) # 숫자 이외의 문자 제거
             mark = soup.select_one('#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child('+ str(i) + ') > a > div.mark > span').get('class')
-            if (today == date.text.strip()) and (mark[0] == "num"): # 오늘 날짜의 공지이고 고정 공지가 아니라면
+            if (today == date) and (mark[0] == "num"): # 오늘 날짜의 공지이고 고정 공지가 아니라면
                 title.append(_title.text.strip())
                 link.append(detail_url + _link[0])
     else:
