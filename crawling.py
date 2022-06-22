@@ -2,6 +2,7 @@ import requests, re, time, const
 from bs4 import BeautifulSoup
 from datetime import datetime
 from pytz import timezone
+from types import NoneType
 
 def get_list_3(url):
     title, link = list(), list()
@@ -10,8 +11,12 @@ def get_list_3(url):
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
-        for i in range(0, 23):
-            _title = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a').text
+        i = 0
+        while True:
+            _title = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a')
+            if type(_title) == NoneType:
+                break
+            _title = _title.text
             _link = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a').get('href')
             _link = url[:23] + _link[2:]
             date = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(5) > span').text.strip()
@@ -19,6 +24,7 @@ def get_list_3(url):
             if (today == date) and (mark != "F5F5F5"):
                 title.append(_title)
                 link.append(_link)
+            i += 1
     else:
         print(response.status_code)
 
@@ -78,10 +84,10 @@ def run(url, notice_type):
     length = len(titles)
     str = ""
     if (length > 0):
-        str = ":bulb: {} {}공지입니다.\n".format(today, notice_type)
+        str = f":bulb: {today} {notice_type}공지입니다.\n"
         for i in range(len(titles)):
-            str = "{}\n{}\n{}\n".format(str, titles[i], urls[i])
+            str = f"{str}\n{titles[i]}\n{urls[i]}\n"
     else:
-        str = ":bulb: {} {}공지는 없습니다.".format(today, notice_type)
+        str = f":bulb: {today} {notice_type}공지는 없습니다."
 
     return str
