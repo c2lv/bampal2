@@ -2,7 +2,6 @@ import requests, re, time, const
 from bs4 import BeautifulSoup
 from datetime import datetime
 from pytz import timezone
-from types import NoneType
 
 def get_list_3(url):
     title, link = list(), list()
@@ -14,7 +13,7 @@ def get_list_3(url):
         i = 0
         while True:
             _title = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a')
-            if type(_title) == NoneType:
+            if _title == None:
                 break
             _title = _title.text
             _link = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a').get('href')
