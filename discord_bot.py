@@ -23,6 +23,7 @@ class PostNotice(commands.Cog):
         ch_general = bot.get_channel(const.CH_GENERAL_ID)
         ch_academic = bot.get_channel(const.CH_ACADEMIC_ID)
         ch_scholarship = bot.get_channel(const.CH_SCHOLARSHIP_ID)
+        ch_global = bot.get_channel(const.CH_GLOBAL_ID)
         ch_workScholarship = bot.get_channel(const.CH_WORKSCHOLARSHIP_ID)
         ch_collegeOfEducation = bot.get_channel(const.CH_COLLEGEOFEDUCATION_ID)
 
@@ -30,6 +31,7 @@ class PostNotice(commands.Cog):
         general_message = crawling.run(const.GENERAL_URL, const.TYPE_GENERAL)
         academic_message = crawling.run(const.ACADEMIC_URL, const.TYPE_ACADEMIC)
         scholarship_message = crawling.run(const.SCHOLARSHIP_URL, const.TYPE_SCHOLARSHIP)
+        global_message = crawling.run(const.GLOBAL_URL, const.TYPE_GLOBAL)
         workScholarship_message = crawling.run(const.WORKSCHOLARSHIP_URL, const.TYPE_WORKSCHOLARSHIP)
         collegeOfEducation_message = crawling.run(const.COLLEGEOFEDUCATION_URL, const.TYPE_COLLEGEOFEDUCATION)
 
@@ -37,6 +39,7 @@ class PostNotice(commands.Cog):
         await ch_general.send(general_message)
         await ch_academic.send(academic_message)
         await ch_scholarship.send(scholarship_message)
+        await ch_global.send(global_message)
         await ch_workScholarship.send(workScholarship_message)
         await ch_collegeOfEducation.send(collegeOfEducation_message)
 
