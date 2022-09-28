@@ -12,7 +12,7 @@ ACADEMIC_URL = "https://www.dongguk.edu/article/HAKSANOTICE/list"
 SCHOLARSHIP_URL = "https://www.dongguk.edu/article/JANGHAKNOTICE/list"
 GLOBAL_URL = "https://www.dongguk.edu/article/GLOBALNOLTICE/list"
 WORKSCHOLARSHIP_URL = "https://scholarship.dongguk.edu/sc2_2_n"
-COLLEGEOFEDUCATION_URL = "https://edu.dongguk.edu/bbs/board.php?bo_table=edu3_1"
+COLLEGEOFEDUCATION_URL = "https://edu.dongguk.edu/article/notice/list"
 
 # notice types
 TYPE_GENERAL = "일반"

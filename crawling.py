@@ -7,26 +7,32 @@ def get_list_3(url):
     title, link = list(), list()
     response = requests.get(url)
     if response.status_code == 200:
+        today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
-        today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
-        i = 0
-        while True:
-            _title = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a')
-            if _title == None:
-                break
-            _title = _title.text
-            _link = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(2) > a').get('href')
-            _link = url[:23] + _link[2:]
-            date = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1}) > td:nth-child(5) > span').text.strip()
-            mark = soup.select_one(f'#s_right > div:nth-child(2) > table > tr > td > form > table > tr:nth-child({2*i+1})').get('bgcolor') # 공지는 F5F5F5
-            if (today == date) and (mark != "F5F5F5"):
-                title.append(_title)
-                link.append(_link)
-            i += 1
+        posts = soup.find('tbody').find_all('tr')
+        for post in posts:
+            num = post.find('span', {'class': "num"})
+            date = post.find_all('td')[3].text
+            if num: # If not notice post
+                if date != today: # If not today post
+                    break
+                else:
+                    _link = 'https://edu.dongguk.edu' + post.find('a')['href']
+                    response = requests.get(_link)
+                    if response.status_code == 200:
+                        html = response.text
+                        soup = BeautifulSoup(html, 'html.parser')
+                        _title = soup.find('div', {'class': "tit"}).find('p').text
+                        title.append(_title)
+                        link.append(_link)
+                    else:
+                        title.append('스크래핑 과정 2에서 문제가 발생했습니다.')
+                        link.append('상태 코드:', response.status_code)
+                        break
     else:
-        print(response.status_code)
-
+        title.append('스크래핑 과정 1에서 문제가 발생했습니다.')
+        link.append('상태 코드:', response.status_code)
     return title, link
 
 def get_list_2(url):
