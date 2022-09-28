@@ -82,6 +82,11 @@ Heroku에 로그인 된 상태에서 Terminal에 다음과 같이 입력
 최근 150줄을 출력하고 싶을 때는 다음과 같이 입력 (-n 옵션이 없을 경우 최근 100줄을 출력)
 > heroku logs -n 150
 
+디스코드 업데이트 관련 변화 관련 정보
+- https://intrepidgeeks.com/tutorial/discord-py-v2-let-me-try-00
+- https://intrepidgeeks.com/tutorial/as-1-modify-crawling-command-error
+- https://discordpy.readthedocs.io/en/stable/intents.html
+
 ## Problem
 
 - API가 반환한 값을 어떻게 확인할 수 있는지, 어떻게 해결해야 하는 지 잘 모르겠다.  
