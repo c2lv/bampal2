@@ -42,15 +42,29 @@ def get_list_2(url):
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
-        for i in range(1, 31):
-            _title = soup.select_one(f'#fboardlist > div > table > tbody > tr:nth-child({i}) > td.td_subject > div > a').text.strip()
-            _link = soup.select_one(f'#fboardlist > div > table > tbody > tr:nth-child({i}) > td.td_subject > div > a').get('href')
-            date = soup.select_one(f'#fboardlist > div > table > tbody > tr:nth-child({i}) > td.td_datetime').text
-            if today == date:
-                title.append(_title)
-                link.append(_link)
+        posts = soup.find('tbody').find_all('tr')
+        for post in posts:
+            num = post.find('span', {'class': "num"})
+            date = post.find_all('td')[3].text
+            if num: # If not notice post
+                if date != today: # If not today post
+                    break
+                else:
+                    _link = 'https://scholarship.dongguk.edu' + post.find('a')['href']
+                    response = requests.get(_link)
+                    if response.status_code == 200:
+                        html = response.text
+                        soup = BeautifulSoup(html, 'html.parser')
+                        _title = soup.find('div', {'class': "tit"}).find('p').text
+                        title.append(_title)
+                        link.append(_link)
+                    else:
+                        title.append('스크래핑 과정 2에서 문제가 발생했습니다.')
+                        link.append('상태 코드:', response.status_code)
+                        break
     else:
-        print(response.status_code)
+        title.append('스크래핑 과정 1에서 문제가 발생했습니다.')
+        link.append('상태 코드:', response.status_code)
 
     return title, link
 
