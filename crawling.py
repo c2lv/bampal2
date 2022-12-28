@@ -5,7 +5,28 @@ from pytz import timezone
 
 def get_list_3(url):
     title, link = list(), list()
-    response = requests.get(url)
+
+    # requests exception
+    try:
+        response = requests.get(url)
+    except requests.exceptions.Timeout as errd:
+        title.append("Timeout Error")
+        link.append(errd)
+        return title, link
+    except requests.exceptions.ConnectionError as errc:
+        title.append("Error Connecting")
+        link.append(errc)
+        return title, link
+    except requests.exceptions.HTTPError as errb:
+        title.append("Http Error")
+        link.append(errb)
+        return title, link
+    # Any Error except upper exception
+    except requests.exceptions.RequestException as erra:
+        title.append("AnyException")
+        link.append(erra)
+        return title, link
+
     if response.status_code == 200:
         today = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         html = response.text
@@ -37,7 +58,28 @@ def get_list_3(url):
 
 def get_list_2(url):
     title, link = list(), list()
-    response = requests.get(url)
+
+    # requests exception
+    try:
+        response = requests.get(url)
+    except requests.exceptions.Timeout as errd:
+        title.append("Timeout Error")
+        link.append(errd)
+        return title, link
+    except requests.exceptions.ConnectionError as errc:
+        title.append("Error Connecting")
+        link.append(errc)
+        return title, link
+    except requests.exceptions.HTTPError as errb:
+        title.append("Http Error")
+        link.append(errb)
+        return title, link
+    # Any Error except upper exception
+    except requests.exceptions.RequestException as erra:
+        title.append("AnyException")
+        link.append(erra)
+        return title, link
+
     if response.status_code == 200:
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
@@ -70,7 +112,28 @@ def get_list_2(url):
 
 def get_list_1(url):
     title, link = list(), list()
-    response = requests.get(url)
+
+    # requests exception
+    try:
+        response = requests.get(url)
+    except requests.exceptions.Timeout as errd:
+        title.append("Timeout Error")
+        link.append(errd)
+        return title, link
+    except requests.exceptions.ConnectionError as errc:
+        title.append("Error Connecting")
+        link.append(errc)
+        return title, link
+    except requests.exceptions.HTTPError as errb:
+        title.append("Http Error")
+        link.append(errb)
+        return title, link
+    # Any Error except upper exception
+    except requests.exceptions.RequestException as erra:
+        title.append("AnyException")
+        link.append(erra)
+        return title, link
+
     if response.status_code == 200: # 응답코드 200(성공, 서버가 요청을 제대로 처리했다는 뜻)
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
