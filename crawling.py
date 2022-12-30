@@ -149,7 +149,7 @@ def get_list_1(url):
             mark = soup.select_one(f'#wrap > div.ly-right > div.contents > div > div.board > div.board_list > ul > li:nth-child({i}) > a > div.mark > span').get('class')
             if (today == date) and (mark[0] == "num"): # 오늘 날짜의 공지이고 고정 공지가 아니라면
                 title.append(_title.text.strip())
-                link.append(detail_url + _link[0])
+                link.append('<' + detail_url + _link[0] + '>')
     else:
         print(response.status_code)
 
